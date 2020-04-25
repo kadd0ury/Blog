@@ -42,7 +42,7 @@
                 <tr>
                     <td>${item.id}</td>
                     <td>${item.title}</td>
-                    <td><fmt:formatDate type = "date" value = "${tag.created}" /> </td>
+                    <td><fmt:formatDate type = "date" value = "${item.created}" /> </td>
                     <td>
                         <a href="${pageContext.request.contextPath}/tag/delete/${pageable.number}/${item.id}" class="btn btn-danger"
                            onclick="if (!(confirm('Vous Voulez supprimer cet elementr?'))) return false">Supprimer</a>

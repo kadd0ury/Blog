@@ -5,9 +5,12 @@ import com.master4.converter.TagConverter;
 import com.master4.converter.TagFormatter;
 import com.master4.entities.Article;
 import com.master4.entities.Tag;
+import com.master4.entities.User;
 import com.master4.exceptions.ResourceNotFoundException;
 import com.master4.services.ArticleService;
 import com.master4.services.TagService;
+import com.master4.services.UserService;
+
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +33,11 @@ public class ArticleController {
 
     @Autowired
     private TagService tagService;
+    
+    @Autowired
+    private UserService userservice;
+    
+    
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -56,12 +64,17 @@ public class ArticleController {
     public String add(ModelMap model,Article article) {
             model.addAttribute("tags", tagService.getAllTags());
             model.addAttribute("article", article);
+            model.addAttribute("listeArticls",userservice.getAllUsers());
+            
+            
        return "article/add";
     }
 
     @GetMapping("/add/{id}")
     public String edit(@PathVariable("id") long id, ModelMap model) throws ResourceNotFoundException {
         Article article=articleService.findByIdWithTags(id);
+        
+        
         List<Tag> tags=tagService.getAllTags();
         tags.forEach(e->{
              article.getTagList().forEach(t->{
@@ -70,20 +83,31 @@ public class ArticleController {
                  }
              });
         });
+        
+        
+        //model.addAttribute("iduser",article.getId());
         model.addAttribute("tags", tags);
-
-
+        model.addAttribute("listeArticls",userservice.getAllUsers());
         model.addAttribute("article", articleService.findByIdWithTags(id));
         return "article/add";
     }
 
     @PostMapping("/save")
     public String saveArticle(@Valid @ModelAttribute("article") Article article, BindingResult result, ModelMap model) throws ResourceNotFoundException {
+    	
         if(result.hasErrors()){
-
             model.addAttribute("tags", tagService.getAllTags());
             model.addAttribute("article",article);
             return "article/add";
+          
+      
+        }
+   
+        for (User obj : userservice.getAllUsers()) {
+        	if (obj.getId()==article.getMyUser()) {
+        		article.setUser(obj);
+        	}
+        	
         }
         articleService.save(article);
         return "redirect:/article/";

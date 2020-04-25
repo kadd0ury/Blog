@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: binizmohamed
-  Date: 4/6/20
-  Time: 20:31
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -41,10 +34,18 @@
                 </label>
                 <form:checkbox path="published"/>
             </div>
-
+            
+            
+               <div class="form-group">
+                <label for="body">User : </label>
+   				 <c:forEach items="${listeArticls}" var="user">
+ 				<form:checkbox path="myUser" value="${user.id}" label="${user.nom}" />
+    			</c:forEach>
+                <form:errors path="myUser" cssClass="alert-danger" />
+            </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    Tags
+                    Tags : 
                 </label>
 
 

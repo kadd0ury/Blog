@@ -40,6 +40,9 @@ public class Article {
     @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified ;
+    
+    @Transient
+    private int myUser;
 
     @ManyToOne
     private User user;

@@ -1,6 +1,5 @@
 package com.master4.entities;
 
-
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,10 +17,19 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    
+    @Column(name="nom", nullable = false)
+    private String nom;
+    
+    @Column(name="prenom", nullable = false)
+    private String prenom;
 
     @Column(name="email", nullable = false, unique = true)
     private String email;
-
+    
+    @Column(name="role", nullable = false)
+    private String role;
+    
     @Column(name="password", nullable = false)
     private String password;
 

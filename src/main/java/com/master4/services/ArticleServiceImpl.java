@@ -58,6 +58,12 @@ public class ArticleServiceImpl  implements ArticleService{
     public Article findByIdWithTags(long id) {
         return articleRepository.findByIdWithTags(id);
     }
+    
+    @Override
+    @Transactional
+    public List<Article> getAllArticles(){
+    return articleRepository.findAll();
+    }
 
 
 }
