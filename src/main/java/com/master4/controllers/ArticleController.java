@@ -14,19 +14,26 @@ import com.master4.services.UserService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 @Controller
 @RequestMapping(value = {"","/article"})
 public class ArticleController {
+	
+	
+	@Autowired
+	HttpSession session ;
 
     @Autowired
     private ArticleService articleService;
@@ -65,6 +72,7 @@ public class ArticleController {
             model.addAttribute("tags", tagService.getAllTags());
             model.addAttribute("article", article);
             model.addAttribute("listeArticls",userservice.getAllUsers());
+            System.out.print(session.getAttribute("userAuth"));
             
             
        return "article/add";

@@ -2,6 +2,8 @@ package com.master4.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +19,11 @@ import com.master4.services.UserService;;
 @Controller
 public class LoginController {
 	
-	String username ;
 
+	
+	@Autowired
+	HttpSession session;
+	
 	
 	@Autowired
 	UserService userservice;
@@ -43,23 +48,49 @@ public class LoginController {
 		String message  = null;
 		String var  = null ;
 		User userEntry = loginservice.validateUser(login);
-		System.out.print(userEntry);
+		//System.out.print(userEntry);
 		
 		if (userEntry!=null ) {
+			
+			session.setAttribute("userAuth", userEntry);
+		
+			
+			System.out.print(session.getAttribute("userAuth")+"session");
+			
 			var = "redirect:/article/";
 		}
 		
 		else {
-	
 		message ="les informations d'authentification sont incorectes";
 		model.addAttribute("message",message);
-			
+		System.out.print(session.getAttribute("userAuth")+"session");
 		var = "login/loginUser";
 		
 		}
 		return var;
 		
 	}
+	
+	@GetMapping("/logout")
+	public String logout() {
+		
+		session.setAttribute("userAuth", null);
+		
+		return "redirect:/login/";
+		
+		
+		
+	}
+	
+	@GetMapping("/403")
+	public String error () {
+		
+		
+		return "Unauthorized/erreur403";
+	}
+	
+	
+	
 
 	
 	

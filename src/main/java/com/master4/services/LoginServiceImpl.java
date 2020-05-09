@@ -24,7 +24,7 @@ public class LoginServiceImpl implements LoginService{
 		
 		for (User user : listeusers) {
 			
-			System.out.println("username :"+user.getNom()+" Password "+user.getPassword());
+			//System.out.println("username :"+user.getNom()+" Password "+user.getPassword());
 			
 			if (user.getNom().equals(login.getUsername()) && user.getPassword().equals(login.getPassword())) {
 				iSuser = user;
@@ -32,7 +32,7 @@ public class LoginServiceImpl implements LoginService{
 			}	
 		}
 		
-		System.out.print("objet return"+iSuser);
+		//System.out.print("objet return"+iSuser);
 		return iSuser;
 		
 	
