@@ -15,14 +15,21 @@
                         </td>
                         <td>
                             <form:input path="username" />
+                         </td>
+                         <td>
+                <form:errors path="username" cssClass="alert-danger" style="color:red"/>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <form:label path="password">Password:</form:label>
+                            
+                
                         </td>
                         <td>
-                            <form:password path="password" />
+                            <form:password path="password" /> <br>
+                            <td>
+                            <form:errors path="password" cssClass="alert-danger" style="color:red" /> </td>
                         </td>
                     </tr>
                     <tr>

@@ -1,101 +1,85 @@
 package com.master4.controllers;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.master4.entities.Login;
 import com.master4.entities.User;
 import com.master4.services.LoginService;
 import com.master4.services.UserService;;
+
 @Controller
 public class LoginController {
-	
 
-	
 	@Autowired
 	HttpSession session;
-	
-	
+
 	@Autowired
 	UserService userservice;
-	
+
 	@Autowired
 	LoginService loginservice;
-	
-	
-	
-	
+
 	@GetMapping("/login")
-	public String loginForm(Model model){	
-	Login login =new Login ();
-	model.addAttribute("login",login);
-	return "login/loginUser";
+	public String loginForm(Model model) {
+		Login login = new Login();
+		model.addAttribute("login", login);
+		return "login/loginUser";
 	}
-	
-	
+
 	@PostMapping("/login")
-	public String login (@ModelAttribute("login") Login login,Model model){
-		
-		String message  = null;
-		String var  = null ;
+	public String login(@Valid @ModelAttribute("login") Login login, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			System.out.println("bonjour login");
+			return "login/loginUser";
+		}
+
+		String message = null;
+		String var = null;
 		User userEntry = loginservice.validateUser(login);
-		//System.out.print(userEntry);
-		
-		if (userEntry!=null ) {
-			
+		// System.out.print(userEntry);
+
+		if (userEntry != null) {
+
 			session.setAttribute("userAuth", userEntry);
-		
-			
-			System.out.print(session.getAttribute("userAuth")+"session");
-			
+
+			System.out.print(session.getAttribute("userAuth") + "session");
+
 			var = "redirect:/article/";
 		}
-		
+
 		else {
-		message ="les informations d'authentification sont incorectes";
-		model.addAttribute("message",message);
-		System.out.print(session.getAttribute("userAuth")+"session");
-		var = "login/loginUser";
-		
+			message = "les informations d'authentification sont incorectes";
+			model.addAttribute("message", message);
+			System.out.print(session.getAttribute("userAuth") + "session");
+			var = "login/loginUser";
+
 		}
 		return var;
-		
+
 	}
-	
+
 	@GetMapping("/logout")
 	public String logout() {
-		
+
 		session.setAttribute("userAuth", null);
-		
+
 		return "redirect:/login/";
-		
-		
-		
+
 	}
-	
+
 	@GetMapping("/403")
-	public String error () {
-		
-		
+	public String error() {
+
 		return "Unauthorized/erreur403";
 	}
-	
-	
-	
-
-	
-	
-	
-	
-
 
 }
