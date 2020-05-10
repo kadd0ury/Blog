@@ -7,36 +7,23 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class ArticleProhibit extends HandlerInterceptorAdapter {
+import com.master4.entities.User;
+
+public class PermissionInterceptor extends HandlerInterceptorAdapter {
 
 	@Autowired
 	HttpSession session;
 
-	String role;
+	
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-
 			throws Exception {
 
-		// System.out.print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+		User authUser = (User)request.getSession(false).getAttribute("userAuth");
 
-		// User authUser= (User)session.getAttribute("userAuth");
-
-		// System.out.print("role"+role);
-		// if (authUser != null ) {
-		// role = authUser.getRole() ;
-
-		// }
-
-		// else {
-
-		// System.out.print("object authUser is null ");
-		// }
-
-		if (role == "Visitor") {
-
-			System.out.print("your role is " + role);
+		if (authUser.getRole().equals("Visitor")) {
+			
 			response.sendRedirect(request.getContextPath() + "/403");
 
 		}

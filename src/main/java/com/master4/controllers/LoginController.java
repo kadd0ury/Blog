@@ -1,5 +1,6 @@
 package com.master4.controllers;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -36,7 +37,7 @@ public class LoginController {
 	}
 
 	@PostMapping("/login")
-	public String login(@Valid @ModelAttribute("login") Login login, BindingResult result, Model model) {
+	public String login(@Valid @ModelAttribute("login") Login login, BindingResult result, Model model,HttpServletRequest request) {
 		if (result.hasErrors()) {
 			System.out.println("bonjour login");
 			return "login/loginUser";
@@ -49,7 +50,9 @@ public class LoginController {
 
 		if (userEntry != null) {
 
-			session.setAttribute("userAuth", userEntry);
+			//session.setAttribute("userAuth", userEntry);
+			
+			request.getSession(true).setAttribute("userAuth", userEntry);
 
 			System.out.print(session.getAttribute("userAuth") + "session");
 
@@ -68,11 +71,13 @@ public class LoginController {
 	}
 
 	@GetMapping("/logout")
-	public String logout() {
+	public String logout(HttpServletRequest request) {
+		request.getSession(true).setAttribute("userAuth", null);
+		loginservice.setUserAuth();
+		//session.setAttribute("userAuth", null);
+		
 
-		session.setAttribute("userAuth", null);
-
-		return "redirect:/login/";
+		return "redirect:/login";
 
 	}
 

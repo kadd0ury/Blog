@@ -6,6 +6,7 @@
         <wb-resource deploy-path="/" source-path="/WebContent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/resouces"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-test-sources/test-annotations"/>
         <property name="context-root" value="master4"/>
         <property name="java-output-path" value="/master4/target/classes"/>
     </wb-module>

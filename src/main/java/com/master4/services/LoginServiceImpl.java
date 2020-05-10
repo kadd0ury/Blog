@@ -38,4 +38,11 @@ public class LoginServiceImpl implements LoginService{
 	
 	}
 	
+	public void setUserAuth() {
+		
+		iSuser=null ;
+		
+		
+	}
+	
 }

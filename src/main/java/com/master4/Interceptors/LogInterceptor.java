@@ -14,14 +14,14 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 		
-		 RequestMapping rm = ((HandlerMethod) handler).getMethodAnnotation(
+		 RequestMapping requestmapping = ((HandlerMethod) handler).getMethodAnnotation(
 	              RequestMapping.class);
 		 
 
 		
 		
-		boolean requestPage = rm != null && rm.value().length > 0
-                && "login".equals(rm.value()[0]);
+		boolean requestPage = requestmapping != null && requestmapping.value().length > 0
+                && "login".equals(requestmapping.value()[0]);
 		
 		boolean isAuth = request.getSession().getAttribute("userAuth") !=null ;
 		

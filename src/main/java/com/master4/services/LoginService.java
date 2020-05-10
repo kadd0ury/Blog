@@ -6,5 +6,6 @@ import com.master4.entities.User;
 public interface LoginService {
 
 	public User validateUser(Login login);
+	public void setUserAuth();
 
 }
